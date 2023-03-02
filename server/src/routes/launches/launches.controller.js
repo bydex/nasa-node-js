@@ -1,14 +1,14 @@
 const {
   getAllLaunches,
-  addNewLaunch,
+  scheduleNewLaunch,
   hasLaunch,
   abortLaunch,
 } = require("../../models/launches.model");
-const httpGetLaunches = (req, res) => {
-  return res.json(getAllLaunches());
+const httpGetLaunches = async (req, res) => {
+  return res.json(await getAllLaunches());
 };
 
-const httpAddNewLaunch = (req, res) => {
+const httpAddNewLaunch = async (req, res) => {
   const launch = req.body;
 
   if (
@@ -30,21 +30,34 @@ const httpAddNewLaunch = (req, res) => {
     });
   }
 
-  addNewLaunch(launch);
+  try {
+    await scheduleNewLaunch(launch);
+  } catch (e) {
+    return res.status(400).json({
+      error: e.message,
+    });
+  }
 
   return res.status(201).json(launch);
 };
 
-const httpAbortLaunch = (req, res) => {
+const httpAbortLaunch = async (req, res) => {
   const id = Number(req.params.id);
+  const existsLaunch = await hasLaunch(id);
 
-  if (!id || isNaN(id) || !hasLaunch(id)) {
+  if (!id || isNaN(id) || !existsLaunch) {
     return res.status(404).json({
       error: "id is invalid!",
     });
   }
 
-  const abortedLaunch = abortLaunch(id);
+  const abortedLaunch = await abortLaunch(id);
+
+  if (!abortedLaunch) {
+    return res.status(400).json({
+      error: "Launch not aborted",
+    });
+  }
 
   return res.status(200).json(abortedLaunch);
 };
