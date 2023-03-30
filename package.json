@@ -6,7 +6,7 @@
   "scripts": {
     "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",
-    "install": "npm run install-server && npm run install-client",
+    "install-all": "npm run install-server && npm run install-client && npm install",
     "server": "npm run watch --prefix server run",
     "client": "npm run start --prefix client",
     "watch": "npm run server & npm run client",
@@ -16,11 +16,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5"
-  },
   "devDependencies": {
-    "morgan": "^1.10.0",
     "prettier": "^2.8.3"
   }
 }

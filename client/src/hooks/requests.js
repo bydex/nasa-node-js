@@ -1,13 +1,15 @@
+const API_VERSION = "v1";
 const API_URL = "http://localhost:8000";
+const ROOT_BACKEND_URL = `${API_URL}/${API_VERSION}`;
 
 async function httpGetPlanets() {
-  const response = await fetch(`${API_URL}/planets`);
+  const response = await fetch(`${ROOT_BACKEND_URL}/planets`);
 
   return await response.json();
 }
 
 async function httpGetLaunches() {
-  const response = await fetch(`${API_URL}/launches`);
+  const response = await fetch(`${ROOT_BACKEND_URL}/launches`);
 
   const launches = await response.json();
 
@@ -16,7 +18,7 @@ async function httpGetLaunches() {
 
 async function httpSubmitLaunch(launch) {
   try {
-    return await fetch(`${API_URL}/launches`, {
+    return await fetch(`${ROOT_BACKEND_URL}/launches`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +34,7 @@ async function httpSubmitLaunch(launch) {
 
 async function httpAbortLaunch(id) {
   try {
-    return await fetch(`${API_URL}/launches/${id}`, {
+    return await fetch(`${ROOT_BACKEND_URL}/launches/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

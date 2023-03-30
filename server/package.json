@@ -13,11 +13,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "dependencies": {
+    "axios": "^1.3.4",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "csv-parse": "^5.3.3",
+    "eslint": "^8.35.0",
     "express": "^4.18.2",
     "mongoose": "^6.9.0",
+    "morgan": "^1.10.0",
+    "nasa-node": "file:..",
     "pm2": "^5.2.2"
   },
   "devDependencies": {

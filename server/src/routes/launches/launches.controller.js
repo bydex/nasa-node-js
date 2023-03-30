@@ -4,14 +4,26 @@ const {
   hasLaunch,
   abortLaunch,
 } = require("../../models/launches.model");
+const { getPagination } = require("../../services/query");
 const httpGetLaunches = async (req, res) => {
-  return res.json(await getAllLaunches());
+  const { query } = req;
+  const { skip, limit } = getPagination({
+    page: query.page,
+    limit: query.limit,
+  });
+  const launches = await getAllLaunches({
+    skip,
+    limit,
+  });
+
+  return res.json(launches);
 };
 
 const httpAddNewLaunch = async (req, res) => {
   const launch = req.body;
 
   if (
+    !launch ||
     !launch.launchDate ||
     !launch.target ||
     !launch.mission ||
@@ -59,7 +71,9 @@ const httpAbortLaunch = async (req, res) => {
     });
   }
 
-  return res.status(200).json(abortedLaunch);
+  return res.status(200).json({
+    message: "Launched successfully aborted!",
+  });
 };
 
 module.exports = {
