@@ -4,3 +4,4 @@
 
 /server/public
 .idea
+/server/.env
